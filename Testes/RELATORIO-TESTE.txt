@@ -162,3 +162,13 @@ return PENA_CONDENACAO_INDIVIDUAL;
 
 mas deveria estar assim:
 return PENA_CONDENACAO_CUMPLICES;
+
+	Erro 5:
+org.opentest4j.AssertionFailedError: expected: <1> but was: <10>
+
+Solução:
+linha 7 da classe JulgamentoPrisioneiro está assim:
+	   private int PENA_CONDENACAO_CUMPLICES = 11;
+
+mas deveria estar assim:
+	   private int PENA_CONDENACAO_CUMPLICES = 1;
