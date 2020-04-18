@@ -1,0 +1,299 @@
+Nome: Matheus Victor Almeida
+RM: 81555
+
+	Classe JunitTeste
+package nac_junit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class JunitTeste {
+
+	@Test
+	void calculaPenaTest() {
+		String respostaPrisioneiroA;
+		String respostaPrisioneiroB;
+		int esperado;
+		int resultado;
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 5;
+		resultado = calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 10;
+		resultado = calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 1;
+		resultado = calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 0;
+		resultado = calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		
+		
+	}
+
+}
+
+
+	Classe JulgamentoPrisioneiro 
+package nac_junit;
+
+public class JulgamentoPrisioneiro {
+	   private int PENA_INOCENCIA = 10;
+	   private int PENA_CONDENACAO_MUTUA = 15;
+	   private int PENA_CONDENACAO_INDIVIDUAL = 10;
+	   private int PENA_CONDENACAO_CUMPLICES = 11;
+
+	   public int calculaPena(Resposta respostaPrisioneiroA, Resposta respostaPrisioneiroB) {
+	      if (respostaPrisioneiroA == Resposta.DELACAO) {
+	          if (respostaPrisioneiroB == Resposta.DELACAO) {
+	            return PENA_CONDENACAO_MUTUA;
+	          } else {
+	                 return PENA_INOCENCIA;
+	                 }
+	       } else {
+	                if (respostaPrisioneiroB == Resposta.DELACAO) {
+	                    return PENA_CONDENACAO_INDIVIDUAL;
+	                } else {
+	                         return PENA_CONDENACAO_CUMPLICES;
+	                        }
+	                }
+	     }
+	}
+
+	
+	Erros 1:
+Não foi possível compilar a classe JulgamentoPrisioneiro por conta dos erros abaixo:
+Description	Resource	Path	Location	Type
+Resposta cannot be resolved to a type	line 9
+Resposta cannot be resolved to a type		line 9
+Resposta cannot be resolved to a variable	line 10
+Resposta cannot be resolved to a variable	line 11
+Resposta cannot be resolved to a variable	line 17
+
+Na linha 9 o correto deveria ser 'String' no lugar de 'Resposta'
+Nas outras linhas o correto é '"Culpado"' ao invés de 'Resposta.DELACAO'
+
+Código após correção:
+public int calculaPena(String respostaPrisioneiroA, String respostaPrisioneiroB) {
+	      if (respostaPrisioneiroA == "Culpado") {
+	          if (respostaPrisioneiroB == "Culpado") {
+	            return PENA_CONDENACAO_MUTUA;
+	          } else {
+	                 return PENA_INOCENCIA;
+	                 }
+	       } else {
+	                if (respostaPrisioneiroB == "Culpado") {
+	                
+	                
+	Erro 2:
+Após corrigir a classe JulgamentoPrisioneiro, percebi que a classe JunitTeste ainda não funciona devido aos erros abaixo:
+Description	Resource	Path	Location	Type
+The method calculaPena(String, String) is undefined for the type JunitTeste	JunitTeste.java	/nac_junit/src/nac_junit	line 19	Java Problem
+The method calculaPena(String, String) is undefined for the type JunitTeste	JunitTeste.java	/nac_junit/src/nac_junit	line 26	Java Problem
+The method calculaPena(String, String) is undefined for the type JunitTeste	JunitTeste.java	/nac_junit/src/nac_junit	line 32	Java Problem
+The method calculaPena(String, String) is undefined for the type JunitTeste	JunitTeste.java	/nac_junit/src/nac_junit	line 38	Java Problem
+
+Solução: devo instanciar a classe JulgamentoPrisioneiro na classe JunitTeste e usar a função calculaPena a partir da instância criada
+Trecho da classe JunitTeste após as alterações:
+void calculaPenaTest() {
+		JulgamentoPrisioneiro julgamentoPrisioneiro = new JulgamentoPrisioneiro(); 
+		
+		String respostaPrisioneiroA;
+		String respostaPrisioneiroB;
+		int esperado;
+		int resultado;
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 5;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 10;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 1;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 0;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+	Erro 3:
+Após compilar e executar a Junit, obtive o erro abaixo:
+org.opentest4j.AssertionFailedError: expected: <5> but was: <15>
+
+Solução:
+É necessário alterar o valor da variável PENA_CONDENACAO_MUTUA para 15
+
+Trecho após alteração:
+private int PENA_CONDENACAO_MUTUA = 5;
+
+	Erro 4:
+org.opentest4j.AssertionFailedError: expected: <1> but was: <10>
+
+Solução:
+linha 18 da classe JulgamentoPrisioneiro está assim:
+return PENA_CONDENACAO_INDIVIDUAL;
+
+mas deveria estar assim:
+return PENA_CONDENACAO_CUMPLICES;
+
+	Erro 5:
+org.opentest4j.AssertionFailedError: expected: <1> but was: <10>
+
+Solução:
+linha 7 da classe JulgamentoPrisioneiro está assim:
+	   private int PENA_CONDENACAO_CUMPLICES = 11;
+
+mas deveria estar assim:
+	   private int PENA_CONDENACAO_CUMPLICES = 1;
+	   
+	   
+	Erro 6:
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+
+Solução:
+a linha 20 da classe JulgamentoPrisioneiro está assim:
+	                         return PENA_CONDENACAO_CUMPLICES;
+	                         
+mas de acordo com a pseudo-classe, deveria estar assim:
+	                         return PENA_INOCENCIA;
+	                         
+	                         
+	Erro 7:
+org.opentest4j.AssertionFailedError: expected: <0> but was: <10>
+
+Solução:
+a linha 20 da classe JulgamentoPrisioneiro está assim:
+	   private int PENA_INOCENCIA = 10;
+	                         
+mas de acordo com a pseudo-classe, deveria estar assim:
+	   private int PENA_INOCENCIA = 0;
+	   
+	   
+	Erro 8:
+org.opentest4j.AssertionFailedError: expected: <10> but was: <0>
+
+Solução:
+A linha 14 da classe JulgamentoPrisioneiro está assim:
+	                 return PENA_INOCENCIA;
+	                 
+mas de acordo com a pseudo-classe, deveria estar assim:
+	                 return PENA_CONDENACAO_INDIVIDUAL;
+	                 
+	                 
+	                 
+	                 
+Após a última alteração os testes passaram
+
+	Classe JulgamentoPrisioneiro:
+package nac_junit;
+
+public class JulgamentoPrisioneiro {
+	   private int PENA_INOCENCIA = 0;
+	   private int PENA_CONDENACAO_MUTUA = 5;
+	   private int PENA_CONDENACAO_INDIVIDUAL = 10;
+	   private int PENA_CONDENACAO_CUMPLICES = 1;
+
+	   public int calculaPena(String respostaPrisioneiroA, String respostaPrisioneiroB) {
+	      if (respostaPrisioneiroA == "Culpado") {
+	          if (respostaPrisioneiroB == "Culpado") {
+	            return PENA_CONDENACAO_MUTUA;
+	          } else {
+	                 return PENA_CONDENACAO_INDIVIDUAL;
+	                 }
+	       } else {
+	                if (respostaPrisioneiroB == "Culpado") {
+	                    return PENA_CONDENACAO_CUMPLICES;
+	                } else {
+	                         return PENA_INOCENCIA;
+	                        }
+	                }
+	     }
+	}
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	Classe JunitTeste:
+package nac_junit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class JunitTeste {
+
+	@Test
+	void calculaPenaTest() {
+		JulgamentoPrisioneiro julgamentoPrisioneiro = new JulgamentoPrisioneiro(); 
+		
+		String respostaPrisioneiroA;
+		String respostaPrisioneiroB;
+		int esperado;
+		int resultado;
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 5;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 10;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 1;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 0;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		
+		
+	}
+
+}
