@@ -87,3 +87,14 @@ Resposta cannot be resolved to a variable	line 17
 
 Na linha 9 o correto deveria ser 'String' no lugar de 'Resposta'
 Nas outras linhas o correto é '"Culpado"' ao invés de 'Resposta.DELACAO'
+
+Código após correção:
+public int calculaPena(String respostaPrisioneiroA, String respostaPrisioneiroB) {
+	      if (respostaPrisioneiroA == "Culpado") {
+	          if (respostaPrisioneiroB == "Culpado") {
+	            return PENA_CONDENACAO_MUTUA;
+	          } else {
+	                 return PENA_INOCENCIA;
+	                 }
+	       } else {
+	                if (respostaPrisioneiroB == "Culpado") {
