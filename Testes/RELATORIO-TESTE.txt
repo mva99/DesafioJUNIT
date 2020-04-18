@@ -205,3 +205,95 @@ A linha 14 da classe JulgamentoPrisioneiro está assim:
 	                 
 mas de acordo com a pseudo-classe, deveria estar assim:
 	                 return PENA_CONDENACAO_INDIVIDUAL;
+	                 
+	                 
+	                 
+	                 
+Após a última alteração os testes passaram
+
+	Classe JulgamentoPrisioneiro:
+package nac_junit;
+
+public class JulgamentoPrisioneiro {
+	   private int PENA_INOCENCIA = 0;
+	   private int PENA_CONDENACAO_MUTUA = 5;
+	   private int PENA_CONDENACAO_INDIVIDUAL = 10;
+	   private int PENA_CONDENACAO_CUMPLICES = 1;
+
+	   public int calculaPena(String respostaPrisioneiroA, String respostaPrisioneiroB) {
+	      if (respostaPrisioneiroA == "Culpado") {
+	          if (respostaPrisioneiroB == "Culpado") {
+	            return PENA_CONDENACAO_MUTUA;
+	          } else {
+	                 return PENA_CONDENACAO_INDIVIDUAL;
+	                 }
+	       } else {
+	                if (respostaPrisioneiroB == "Culpado") {
+	                    return PENA_CONDENACAO_CUMPLICES;
+	                } else {
+	                         return PENA_INOCENCIA;
+	                        }
+	                }
+	     }
+	}
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	Classe JunitTeste:
+package nac_junit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class JunitTeste {
+
+	@Test
+	void calculaPenaTest() {
+		JulgamentoPrisioneiro julgamentoPrisioneiro = new JulgamentoPrisioneiro(); 
+		
+		String respostaPrisioneiroA;
+		String respostaPrisioneiroB;
+		int esperado;
+		int resultado;
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 5;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 10;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 1;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 0;
+		resultado = julgamentoPrisioneiro.calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		
+		
+	}
+
+}
