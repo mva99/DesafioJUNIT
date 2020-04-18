@@ -183,3 +183,14 @@ a linha 20 da classe JulgamentoPrisioneiro está assim:
 	                         
 mas de acordo com a pseudo-classe, deveria estar assim:
 	                         return PENA_INOCENCIA;
+	                         
+	                         
+	Erro 7:
+org.opentest4j.AssertionFailedError: expected: <0> but was: <10>
+
+Solução:
+a linha 20 da classe JulgamentoPrisioneiro está assim:
+	   private int PENA_INOCENCIA = 10;
+	                         
+mas de acordo com a pseudo-classe, deveria estar assim:
+	   private int PENA_INOCENCIA = 0;
