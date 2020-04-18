@@ -1,0 +1,49 @@
+Nome: Matheus Victor Almeida
+RM: 81555
+
+	Classe JunitTeste
+package nac_junit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class JunitTeste {
+
+	@Test
+	void calculaPenaTest() {
+		String respostaPrisioneiroA;
+		String respostaPrisioneiroB;
+		int esperado;
+		int resultado;
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 5;
+		resultado = calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		
+		respostaPrisioneiroA = "Culpado";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 10;
+		resultado = calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Culpado";
+		esperado = 1;
+		resultado = calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		respostaPrisioneiroA = "Inocente";
+		respostaPrisioneiroB = "Inocente";
+		esperado = 0;
+		resultado = calculaPena(respostaPrisioneiroA, respostaPrisioneiroB);		
+		assertEquals(esperado, resultado);
+		
+		
+		
+	}
+
+}
