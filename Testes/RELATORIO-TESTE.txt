@@ -172,3 +172,14 @@ linha 7 da classe JulgamentoPrisioneiro está assim:
 
 mas deveria estar assim:
 	   private int PENA_CONDENACAO_CUMPLICES = 1;
+	   
+	   
+	Erro 6:
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+
+Solução:
+a linha 20 da classe JulgamentoPrisioneiro está assim:
+	                         return PENA_CONDENACAO_CUMPLICES;
+	                         
+mas de acordo com a pseudo-classe, deveria estar assim:
+	                         return PENA_INOCENCIA;
